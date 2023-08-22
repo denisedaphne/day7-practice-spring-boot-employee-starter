@@ -21,9 +21,9 @@ public class EmployeeRepository {
         return employees;
     }
 
-    public Employee findById(Long id) {
+    public Employee findById(Long employeeId) {
         return employees.stream()
-                .filter(employee -> employee.getId().equals(id))
+                .filter(employee -> employee.getEmployeeId().equals(employeeId))
                 .findFirst()
                 .orElseThrow(EmployeeNotFoundException::new);
     }
@@ -35,16 +35,16 @@ public class EmployeeRepository {
     }
 
     public Employee addEmployee(Employee employee) {
-        Long id = generateId();
+        Long employeeId = generateEmployeeId();
 
-        Employee toBeSavedEmployee = new Employee(id, employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary(), employee.getCompanyId());
+        Employee toBeSavedEmployee = new Employee(employeeId, employee.getEmployeeName(), employee.getAge(), employee.getGender(), employee.getSalary(), employee.getCompanyId());
         employees.add(toBeSavedEmployee);
         return toBeSavedEmployee;
     }
 
-    public Long generateId(){
+    public Long generateEmployeeId(){
         return employees.stream()
-                .mapToLong(Employee::getId)
+                .mapToLong(Employee::getEmployeeId)
                 .max()
                 .orElse(0L) + 1;
     }
@@ -56,9 +56,9 @@ public class EmployeeRepository {
                 .collect(Collectors.toList());
     }
 
-    public Employee updateEmployee(Long id, Integer newAge, Integer newSalary) {
+    public Employee updateEmployee(Long employeeId, Integer newAge, Integer newSalary) {
         Employee employeeToUpdate = employees.stream()
-                .filter(employee -> employee.getId().equals(id))
+                .filter(employee -> employee.getEmployeeId().equals(employeeId))
                 .findFirst()
                 .orElseThrow(EmployeeNotFoundException::new);
 
@@ -68,9 +68,9 @@ public class EmployeeRepository {
         return employeeToUpdate;
     }
 
-    public void deleteEmployee(Long id) {
+    public void deleteEmployee(Long employeeId) {
         Employee employeeToDelete = employees.stream()
-                .filter(employee -> employee.getId().equals(id))
+                .filter(employee -> employee.getEmployeeId().equals(employeeId))
                 .findFirst()
                 .orElseThrow(EmployeeNotFoundException::new);
 
