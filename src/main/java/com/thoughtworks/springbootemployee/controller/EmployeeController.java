@@ -47,4 +47,12 @@ public class EmployeeController {
     public void deleteEmployee(@PathVariable Long id) {
         employeeRepository.deleteEmployee(id);
     }
+
+    @Autowired
+    private CompanyRepository companyRepository;
+
+    @GetMapping("/companies")
+    public List<Company> listAllCompanies() {
+        return companyRepository.listAllCompanies();
+    }
 }
