@@ -8,6 +8,7 @@ import java.util.List;
 
 @RequestMapping(path = "/companies")
 @RestController
+@SuppressWarnings("all")
 public class CompanyController {
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -19,12 +20,12 @@ public class CompanyController {
         return companyRepository.listAllCompanies();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{companyId}")
     public Company findCompanyById(@PathVariable Long companyId) {
         return companyRepository.findCompanyById(companyId);
     }
 
-    @GetMapping("/{id}/employees")
+    @GetMapping("/{companyId}/employees")
     public List<Employee> listEmployeesByCompanyId(@PathVariable Long companyId) {
         return employeeRepository.listEmployeesByCompanyId(companyId);
     }
@@ -40,12 +41,12 @@ public class CompanyController {
         return companyRepository.addCompany(company);
     }
 
-    @PutMapping("/{id}")
-    public Company updateCompany(@PathVariable Long companyId, @RequestBody Company company) {
-        return companyRepository.updateCompany(companyId, company);
+    @PutMapping("/{companyId}")
+    public Company updateCompany(@PathVariable Long companyId, @RequestBody Company companyName) {
+        return companyRepository.updateCompany(companyId, companyName);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{companyId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCompany(@PathVariable Long companyId) {
         companyRepository.deleteCompany(companyId);
