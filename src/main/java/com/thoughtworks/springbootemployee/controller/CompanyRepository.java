@@ -19,9 +19,9 @@ public class CompanyRepository {
         return companies;
     }
 
-    public Company findCompanyById(Long id) {
+    public Company findCompanyById(Long companyId) {
         return companies.stream()
-                .filter(company -> company.getId().equals(id))
+                .filter(company -> company.getCompanyId().equals(companyId))
                 .findFirst()
                 .orElseThrow(CompanyNotFoundException::new);
     }
@@ -34,34 +34,34 @@ public class CompanyRepository {
     }
 
     public Company addCompany(Company company) {
-        Long id = generateId();
+        Long companyId = generateCompanyId();
 
-        Company toBeSavedCompany = new Company(id, company.getName());
+        Company toBeSavedCompany = new Company(companyId, company.getCompanyName());
         companies.add(toBeSavedCompany);
         return toBeSavedCompany;
     }
 
-    public Long generateId() {
+    public Long generateCompanyId() {
         return companies.stream()
-                .mapToLong(Company::getId)
+                .mapToLong(Company::getCompanyId)
                 .max()
                 .orElse(0L) + 1;
     }
 
-    public Company updateCompany(Long id, Company updatedCompany) {
+    public Company updateCompany(Long companyId, Company updatedCompany) {
         Company companyToUpdate = companies.stream()
-                .filter(company -> company.getId().equals(id))
+                .filter(company -> company.getCompanyId().equals(companyId))
                 .findFirst()
                 .orElseThrow(CompanyNotFoundException::new);
 
-        companyToUpdate.setName(updatedCompany.getName());
+        companyToUpdate.setCompanyName(updatedCompany.getCompanyName());
 
         return companyToUpdate;
     }
 
     public void deleteCompany(Long id) {
         Company companyToDelete = companies.stream()
-                .filter(company -> company.getId().equals(id))
+                .filter(company -> company.getCompanyId().equals(id))
                 .findFirst()
                 .orElseThrow(CompanyNotFoundException::new);
 
