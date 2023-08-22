@@ -15,4 +15,11 @@ public class CompanyRepository {
     public List<Company> listAllCompanies() {
         return companies;
     }
+
+    public Company findCompanyById(Long id) {
+        return companies.stream()
+                .filter(company -> company.getId().equals(id))
+                .findFirst()
+                .orElseThrow(CompanyNotFoundException::new);
+    }
 }

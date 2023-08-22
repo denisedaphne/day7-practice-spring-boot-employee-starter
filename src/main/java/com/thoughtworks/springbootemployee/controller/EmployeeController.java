@@ -55,4 +55,9 @@ public class EmployeeController {
     public List<Company> listAllCompanies() {
         return companyRepository.listAllCompanies();
     }
+
+    @GetMapping("/companies/{id}")
+    public Company findCompanyById(@PathVariable Long id) {
+        return companyRepository.findCompanyById(id);
+    }
 }
