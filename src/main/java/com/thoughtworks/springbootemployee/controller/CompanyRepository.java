@@ -1,5 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
