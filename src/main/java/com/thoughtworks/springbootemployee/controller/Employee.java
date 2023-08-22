@@ -1,16 +1,16 @@
 package com.thoughtworks.springbootemployee.controller;
 
 public class Employee {
-    private Long id;
-    private String name;
+    private final Long employeeId;
+    private final String employeeName;
     private Integer age;
-    private String gender;
+    private final String gender;
     private Integer salary;
-    private Long companyId;
+    private final Long companyId;
 
-    public Employee(Long employeeId, String name, Integer age, String gender, Integer salary, Long companyId) {
-        this.id = employeeId;
-        this.name = name;
+    public Employee(Long employeeId, String employeeName, Integer age, String gender, Integer salary, Long companyId) {
+        this.employeeId = employeeId;
+        this.employeeName = employeeName;
         this.age = age;
         this.gender = gender;
         this.salary = salary;
@@ -18,11 +18,11 @@ public class Employee {
     }
 
     public Long getEmployeeId() {
-        return id;
+        return employeeId;
     }
 
     public String getEmployeeName() {
-        return name;
+        return employeeName;
     }
 
     public Integer getAge() {
@@ -37,20 +37,8 @@ public class Employee {
         return salary;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setAge(Integer age) {
         this.age = age;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     public void setSalary(Integer salary) {
@@ -59,9 +47,5 @@ public class Employee {
 
     public Long getCompanyId() {
         return companyId;
-    }
-
-    public void setCompanyId(Long companyId) {
-        this.companyId = companyId;
     }
 }
