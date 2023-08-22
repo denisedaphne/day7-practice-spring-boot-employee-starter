@@ -12,9 +12,12 @@ public class CompanyRepository {
     private static final List<Company> companies = new ArrayList<>();
 
     static {
-        companies.add(new Company(1L, "Company A"));
-        companies.add(new Company(2L, "Company B"));
-        companies.add(new Company(3L, "Company C"));
+        companies.add(new Company(1L, "Orient Overseas Container Line"));
+        companies.add(new Company(2L, "ThoughtWorks"));
+        companies.add(new Company(3L, "Wells Fargo"));
+        companies.add(new Company(4L, "Google"));
+        companies.add(new Company(5L, "Procter & Gamble"));
+        companies.add(new Company(6L, "Unilever"));
     }
 
     public List<Company> listAllCompanies() {
