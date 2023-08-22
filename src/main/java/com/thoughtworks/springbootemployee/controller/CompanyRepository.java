@@ -56,4 +56,13 @@ public class CompanyRepository {
 
         return companyToUpdate;
     }
+
+    public void deleteCompany(Long id) {
+        Company companyToDelete = companies.stream()
+                .filter(company -> company.getId().equals(id))
+                .findFirst()
+                .orElseThrow(CompanyNotFoundException::new);
+
+        companies.remove(companyToDelete);
+    }
 }
