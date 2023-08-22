@@ -12,9 +12,9 @@ public class EmployeeRepository {
     private static final List<Employee> employees = new ArrayList<>();
 
     static {
-        employees.add(new Employee(1L, "Daphne", 23, "Female", 1000));
-        employees.add(new Employee(2L, "Red", 25, "Male", 1500));
-        employees.add(new Employee(3L, "Denise", 20, "Female", 2000));
+        employees.add(new Employee(1L, "Daphne", 23, "Female", 1000, 1L));
+        employees.add(new Employee(2L, "Red", 25, "Male", 1500, 2L));
+        employees.add(new Employee(3L, "Denise", 20, "Female", 2000, 1L));
     }
 
     public List<Employee> listAll() {
@@ -37,7 +37,7 @@ public class EmployeeRepository {
     public Employee addEmployee(Employee employee) {
         Long id = generateId();
 
-        Employee toBeSavedEmployee = new Employee(id, employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary());
+        Employee toBeSavedEmployee = new Employee(id, employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary(), employee.getCompanyId());
         employees.add(toBeSavedEmployee);
         return toBeSavedEmployee;
     }
@@ -75,5 +75,11 @@ public class EmployeeRepository {
                 .orElseThrow(EmployeeNotFoundException::new);
 
         employees.remove(employeeToDelete);
+    }
+
+    public List<Employee> listEmployeesByCompanyId(Long companyId) {
+        return employees.stream()
+                .filter(employee -> employee.getCompanyId().equals(companyId))
+                .collect(Collectors.toList());
     }
 }
