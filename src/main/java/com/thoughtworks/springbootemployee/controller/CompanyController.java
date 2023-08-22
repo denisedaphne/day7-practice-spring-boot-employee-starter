@@ -20,13 +20,13 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    public Company findCompanyById(@PathVariable Long id) {
-        return companyRepository.findCompanyById(id);
+    public Company findCompanyById(@PathVariable Long companyId) {
+        return companyRepository.findCompanyById(companyId);
     }
 
     @GetMapping("/{id}/employees")
-    public List<Employee> listEmployeesByCompanyId(@PathVariable Long id) {
-        return employeeRepository.listEmployeesByCompanyId(id);
+    public List<Employee> listEmployeesByCompanyId(@PathVariable Long companyId) {
+        return employeeRepository.listEmployeesByCompanyId(companyId);
     }
 
     @GetMapping(params = {"pageNumber", "pageSize"})
@@ -41,13 +41,13 @@ public class CompanyController {
     }
 
     @PutMapping("/{id}")
-    public Company updateCompany(@PathVariable Long id, @RequestBody Company company) {
-        return companyRepository.updateCompany(id, company);
+    public Company updateCompany(@PathVariable Long companyId, @RequestBody Company company) {
+        return companyRepository.updateCompany(companyId, company);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCompany(@PathVariable Long id) {
-        companyRepository.deleteCompany(id);
+    public void deleteCompany(@PathVariable Long companyId) {
+        companyRepository.deleteCompany(companyId);
     }
 }
