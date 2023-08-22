@@ -37,4 +37,8 @@ public class EmployeeController {
         return employeeRepository.listByPage(pageNumber, pageSize);
     }
 
+    @PutMapping(path = "/{id}")
+    public Employee updateEmployee(@PathVariable Long id, @RequestParam Integer newAge, @RequestParam Integer newSalary) {
+        return employeeRepository.updateEmployee(id, newAge, newSalary);
+    }
 }

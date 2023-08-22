@@ -55,4 +55,16 @@ public class EmployeeRepository {
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
+
+    public Employee updateEmployee(Long id, Integer newAge, Integer newSalary) {
+        Employee employeeToUpdate = employees.stream()
+                .filter(employee -> employee.getId().equals(id))
+                .findFirst()
+                .orElseThrow(EmployeeNotFoundException::new);
+
+        employeeToUpdate.setAge(newAge);
+        employeeToUpdate.setSalary(newSalary);
+
+        return employeeToUpdate;
+    }
 }
