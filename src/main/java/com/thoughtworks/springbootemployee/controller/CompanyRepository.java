@@ -30,4 +30,19 @@ public class CompanyRepository {
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
+
+    public Company addCompany(Company company) {
+        Long id = generateId();
+
+        Company toBeSavedCompany = new Company(id, company.getName());
+        companies.add(toBeSavedCompany);
+        return toBeSavedCompany;
+    }
+
+    public Long generateId() {
+        return companies.stream()
+                .mapToLong(Company::getId)
+                .max()
+                .orElse(0L) + 1;
+    }
 }
