@@ -15,6 +15,11 @@ public class EmployeeRepository {
         employees.add(new Employee(1L, "Daphne", 23, "Female", 1000, 1L));
         employees.add(new Employee(2L, "Red", 25, "Male", 1500, 2L));
         employees.add(new Employee(3L, "Denise", 20, "Female", 2000, 1L));
+        employees.add(new Employee(4L, "Raymond", 21, "Male", 3000, 3L));
+        employees.add(new Employee(5L, "Kara", 28, "Female", 2500, 4L));
+        employees.add(new Employee(6L, "Chewie", 26, "Female", 3500, 3L));
+        employees.add(new Employee(7L, "Diana Prince", 22, "Female", 4000, 6L));
+        employees.add(new Employee(8L, "Barry Allen", 29, "Male", 4500, 5L));
     }
 
     public List<Employee> listAll() {
