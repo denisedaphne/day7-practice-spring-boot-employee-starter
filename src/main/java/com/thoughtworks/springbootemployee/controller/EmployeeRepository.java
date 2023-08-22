@@ -12,8 +12,9 @@ public class EmployeeRepository {
     private static final List<Employee> employees = new ArrayList<>();
 
     static {
-        employees.add(new Employee(1, "Daphne", 23, "Female", 1000));
-        employees.add(new Employee(2, "Red", 25, "Male", 1500));
+        employees.add(new Employee(1L, "Daphne", 23, "Female", 1000));
+        employees.add(new Employee(2L, "Red", 25, "Male", 1500));
+        employees.add(new Employee(3L, "Denise", 20, "Female", 2000));
     }
 
     public List<Employee> listAll() {
@@ -33,14 +34,25 @@ public class EmployeeRepository {
                 .collect(Collectors.toList());
     }
 
-//    public Employee addEmployee(Employee employee) {
-//        return employee.add(new Employee(generateId(), "Bob", 35, "Male", 60000));
-//    }
+    public Employee addEmployee(Employee employee) {
+        Long id = generateId();
 
-    public long generateId(){
-        Employee employee1 = employees.stream()
-                .max(Comparator.comparingLong(employee -> employee.getId()))
-                .orElseThrow(EmployeeNotFoundException::new);
-        return employee1.getId()+1;
+        Employee toBeSavedEmployee = new Employee(id, employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary());
+        employees.add(toBeSavedEmployee);
+        return toBeSavedEmployee;
+    }
+
+    public Long generateId(){
+        return employees.stream()
+                .mapToLong(Employee::getId)
+                .max()
+                .orElse(0L) + 1;
+    }
+
+    public List<Employee> listByPage(Long pageNumber, Long pageSize) {
+        return employees.stream()
+                .skip((pageNumber - 1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 }

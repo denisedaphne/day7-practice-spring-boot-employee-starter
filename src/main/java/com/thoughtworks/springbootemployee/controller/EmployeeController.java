@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,8 +26,15 @@ public class EmployeeController {
         return employeeRepository.findByGender(gender);
     }
 
-    @PostMapping(path = "/employees")
-    public Employee addEmployee(@RequestBody Employee employee){
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Employee addEmployee(@RequestBody Employee employee) {
         return employeeRepository.addEmployee(employee);
     }
+
+    @GetMapping(params = {"pageNumber", "pageSize"})
+    public List<Employee> listByPage(@RequestParam Long pageNumber, Long pageSize){
+        return employeeRepository.listByPage(pageNumber, pageSize);
+    }
+
 }
