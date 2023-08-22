@@ -41,4 +41,10 @@ public class EmployeeController {
     public Employee updateEmployee(@PathVariable Long id, @RequestParam Integer newAge, @RequestParam Integer newSalary) {
         return employeeRepository.updateEmployee(id, newAge, newSalary);
     }
+
+    @DeleteMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteEmployee(@PathVariable Long id) {
+        employeeRepository.deleteEmployee(id);
+    }
 }

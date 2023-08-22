@@ -67,4 +67,13 @@ public class EmployeeRepository {
 
         return employeeToUpdate;
     }
+
+    public void deleteEmployee(Long id) {
+        Employee employeeToDelete = employees.stream()
+                .filter(employee -> employee.getId().equals(id))
+                .findFirst()
+                .orElseThrow(EmployeeNotFoundException::new);
+
+        employees.remove(employeeToDelete);
+    }
 }
