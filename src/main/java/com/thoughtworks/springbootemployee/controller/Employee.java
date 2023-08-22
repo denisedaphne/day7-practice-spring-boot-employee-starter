@@ -8,8 +8,8 @@ public class Employee {
     private Integer salary;
     private Long companyId;
 
-    public Employee(long id, String name, int age, String gender, int salary, long companyId) {
-        this.id = id;
+    public Employee(long employeeId, String name, int age, String gender, int salary, long companyId) {
+        this.id = employeeId;
         this.name = name;
         this.age = age;
         this.gender = gender;
@@ -17,11 +17,11 @@ public class Employee {
         this.companyId = companyId;
     }
 
-    public Long getId() {
+    public Long getEmployeeId() {
         return id;
     }
 
-    public String getName() {
+    public String getEmployeeName() {
         return name;
     }
 
