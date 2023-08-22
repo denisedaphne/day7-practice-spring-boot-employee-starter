@@ -19,7 +19,7 @@ public class EmployeeController {
 
     @GetMapping("/{employeeId}")
     public Employee findByEmployeeId(@PathVariable Long employeeId) {
-        return employeeRepository.findById(employeeId);
+        return employeeRepository.findEmployeeById(employeeId);
     }
 
     @GetMapping(params = {"gender"})
@@ -35,7 +35,7 @@ public class EmployeeController {
 
     @GetMapping(params = {"pageNumber", "pageSize"})
     public List<Employee> listEmployeesByPage(@RequestParam Long pageNumber, Long pageSize){
-        return employeeRepository.listByPage(pageNumber, pageSize);
+        return employeeRepository.listEmployeeByPage(pageNumber, pageSize);
     }
 
     @PutMapping("/{employeeId}")
