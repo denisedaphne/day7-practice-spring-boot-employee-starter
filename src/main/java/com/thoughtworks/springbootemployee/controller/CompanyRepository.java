@@ -1,11 +1,13 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Repository
 public class CompanyRepository {
     private static final List<Company> companies = new ArrayList<>();
 
