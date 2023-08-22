@@ -8,16 +8,17 @@ import java.util.List;
 
 @RequestMapping(path = "/employees")
 @RestController
+@SuppressWarnings("all")
 public class EmployeeController {
     @Autowired
     private EmployeeRepository employeeRepository;
     @GetMapping
-    public List<Employee> listAll(){
+    public List<Employee> listAllEmployees(){
         return employeeRepository.listAll();
     }
 
-    @GetMapping(path = "/{id}")
-    public Employee findById(@PathVariable Long employeeId) {
+    @GetMapping("/{employeeId}")
+    public Employee findByEmployeeId(@PathVariable Long employeeId) {
         return employeeRepository.findById(employeeId);
     }
 
@@ -33,16 +34,16 @@ public class EmployeeController {
     }
 
     @GetMapping(params = {"pageNumber", "pageSize"})
-    public List<Employee> listByPage(@RequestParam Long pageNumber, Long pageSize){
+    public List<Employee> listEmployeesByPage(@RequestParam Long pageNumber, Long pageSize){
         return employeeRepository.listByPage(pageNumber, pageSize);
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping("/{employeeId}")
     public Employee updateEmployee(@PathVariable Long employeeId, @RequestParam Integer newAge, @RequestParam Integer newSalary) {
         return employeeRepository.updateEmployee(employeeId, newAge, newSalary);
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping("/{employeeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteEmployee(@PathVariable Long employeeId) {
         employeeRepository.deleteEmployee(employeeId);
