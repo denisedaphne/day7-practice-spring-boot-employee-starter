@@ -26,7 +26,7 @@ public class EmployeeRepository {
         return employees;
     }
 
-    public Employee findById(Long employeeId) {
+    public Employee findEmployeeById(Long employeeId) {
         return employees.stream()
                 .filter(employee -> employee.getEmployeeId().equals(employeeId))
                 .findFirst()
@@ -51,10 +51,10 @@ public class EmployeeRepository {
         return employees.stream()
                 .mapToLong(Employee::getEmployeeId)
                 .max()
-                .orElse(0L) + 1;
+                .orElse(Const.START_ID_MINUS_ONE) + Const.ID_INCREMENT;
     }
 
-    public List<Employee> listByPage(Long pageNumber, Long pageSize) {
+    public List<Employee> listEmployeeByPage(Long pageNumber, Long pageSize) {
         return employees.stream()
                 .skip((pageNumber - 1) * pageSize)
                 .limit(pageSize)

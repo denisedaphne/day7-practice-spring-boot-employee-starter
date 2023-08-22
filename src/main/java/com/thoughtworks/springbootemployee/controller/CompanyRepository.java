@@ -33,7 +33,7 @@ public class CompanyRepository {
 
     public List<Company> listCompaniesByPage(Long pageNumber, Long pageSize) {
         return companies.stream()
-                .skip((pageNumber - 1) * pageSize)
+                .skip((pageNumber - Const.PAGE_ONE) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
@@ -50,7 +50,7 @@ public class CompanyRepository {
         return companies.stream()
                 .mapToLong(Company::getCompanyId)
                 .max()
-                .orElse(0L) + 1;
+                .orElse(Const.START_ID_MINUS_ONE) + Const.ID_INCREMENT;
     }
 
     public Company updateCompany(Long companyId, Company updatedCompany) {
