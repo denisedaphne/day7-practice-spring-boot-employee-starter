@@ -59,5 +59,23 @@ public class CompanyApiTests {
                 .andExpect(jsonPath("$.companyId").exists())
                 .andExpect(jsonPath("$.companyName").value(newCompany.getCompanyName()));
     }
+
+    @Test
+    void should_return_page_companies_when_perform_get_given_companies_with_page() throws Exception {
+        //given
+        Company company1 = companyRepository.addCompany(new Company(1L, "Company 1"));
+        Company company2 = companyRepository.addCompany(new Company(2L, "Company 2"));
+        Company company3 = companyRepository.addCompany(new Company(3L, "Company 3"));
+
+        //when //then
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/companies")
+                        .param("pageNumber", "1")
+                        .param("pageSize", "3"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].companyId").value(company1.getCompanyId()))
+                .andExpect(jsonPath("$[1].companyId").value(company2.getCompanyId()))
+                .andExpect(jsonPath("$[2].companyId").value(company3.getCompanyId()));
+    }
 }
 
