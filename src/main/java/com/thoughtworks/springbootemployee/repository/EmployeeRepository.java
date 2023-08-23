@@ -63,18 +63,6 @@ public class EmployeeRepository {
                 .collect(Collectors.toList());
     }
 
-    public Employee updateEmployee(Long employeeId, Integer newAge, Integer newSalary) {
-        Employee employeeToUpdate = employees.stream()
-                .filter(employee -> employee.getId().equals(employeeId))
-                .findFirst()
-                .orElseThrow(EmployeeNotFoundException::new);
-
-        employeeToUpdate.setAge(newAge);
-        employeeToUpdate.setSalary(newSalary);
-
-        return employeeToUpdate;
-    }
-
     public List<Employee> listEmployeesByCompanyId(Long companyId) {
         return employees.stream()
                 .filter(employee -> employee.getCompanyId().equals(companyId))
