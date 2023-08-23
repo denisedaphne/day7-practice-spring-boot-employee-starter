@@ -74,4 +74,8 @@ public class CompanyRepository {
 
         companies.remove(companyToDelete);
     }
+
+    public void cleanAll() {
+        companies.clear();
+    }
 }
