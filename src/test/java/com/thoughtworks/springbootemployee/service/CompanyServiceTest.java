@@ -63,4 +63,22 @@ public class CompanyServiceTest {
         // then
         verify(companyRepository, times(1)).deleteCompany(companyId);
     }
+
+    @Test
+    void should_return_updated_company_when_update_given_company_id_updated_company() {
+        // given
+        Long companyId = 1L;
+        Company updatedCompany = new Company(1L, "Updated Company");
+
+        when(companyRepository.findCompanyById(companyId)).thenReturn(new Company(companyId, "Old Company"));
+        when(companyRepository.updateCompany(companyId, updatedCompany)).thenReturn(updatedCompany);
+
+        // when
+        Company result = companyService.update(companyId, updatedCompany);
+
+        // then
+        assertEquals(updatedCompany, result);
+        verify(companyRepository, times(1)).findCompanyById(companyId);
+        verify(companyRepository, times(1)).updateCompany(companyId, updatedCompany);
+    }
 }
