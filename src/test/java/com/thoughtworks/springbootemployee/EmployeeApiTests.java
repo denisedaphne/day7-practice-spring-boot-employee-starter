@@ -126,4 +126,16 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$.gender").value(alice.getGender()))
                 .andExpect(jsonPath("$.salary").value(updateAlice.getSalary()));
     }
+
+    @Test
+    void should_delete_employee_when_perform_delete_given_an_employee_id() throws Exception {
+        //given
+        Employee alice = employeeRepository.addEmployee(new Employee("Alice", 24, "Female", 9800));
+        //when
+        mockMvcClient.perform(MockMvcRequestBuilders.delete("/employees/" + alice.getId()))
+                .andExpect(status().isNoContent());
+        //then
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/" + alice.getId()))
+                .andExpect(status().isNotFound());
+    }
 }
