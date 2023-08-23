@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
 
 public class EmployeeServiceTest {
     private EmployeeService employeeService;
@@ -69,5 +69,18 @@ public class EmployeeServiceTest {
         Employee createEmployee = employeeService.create(employee);
         //then
         assertTrue(createEmployee.isActive());
+    }
+
+    @Test
+    void should_delete_employee_by_setting_active_status_to_false() {
+        //given
+        Employee employee = new Employee(1L, "Lucy", 25, "Female", 5000);
+        when(mockedEmployeeRepository.findEmployeeById(1L)).thenReturn(employee);
+        when(mockedEmployeeRepository.update(any(Long.class), any(Employee.class))).thenReturn(employee);
+        //when
+        employeeService.delete(1L);
+        //then
+        assertFalse(employee.isActive());
+        verify(mockedEmployeeRepository).update(eq(1L), any(Employee.class));
     }
 }
