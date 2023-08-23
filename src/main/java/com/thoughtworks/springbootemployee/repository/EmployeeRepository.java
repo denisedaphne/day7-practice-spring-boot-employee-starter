@@ -30,7 +30,7 @@ public class EmployeeRepository {
 
     public Employee findEmployeeById(Long employeeId) {
         return employees.stream()
-                .filter(employee -> employee.getEmployeeId().equals(employeeId))
+                .filter(employee -> employee.getId().equals(employeeId))
                 .findFirst()
                 .orElseThrow(EmployeeNotFoundException::new);
     }
@@ -44,14 +44,14 @@ public class EmployeeRepository {
     public Employee addEmployee(Employee employee) {
         Long employeeId = generateEmployeeId();
 
-        Employee toBeSavedEmployee = new Employee(employeeId, employee.getEmployeeName(), employee.getAge(), employee.getGender(), employee.getSalary(), employee.getCompanyId());
+        Employee toBeSavedEmployee = new Employee(employeeId, employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary(), employee.getCompanyId());
         employees.add(toBeSavedEmployee);
         return toBeSavedEmployee;
     }
 
     public Long generateEmployeeId(){
         return employees.stream()
-                .mapToLong(Employee::getEmployeeId)
+                .mapToLong(Employee::getId)
                 .max()
                 .orElse(Const.START_ID_MINUS_ONE) + Const.ID_INCREMENT;
     }
@@ -65,7 +65,7 @@ public class EmployeeRepository {
 
     public Employee updateEmployee(Long employeeId, Integer newAge, Integer newSalary) {
         Employee employeeToUpdate = employees.stream()
-                .filter(employee -> employee.getEmployeeId().equals(employeeId))
+                .filter(employee -> employee.getId().equals(employeeId))
                 .findFirst()
                 .orElseThrow(EmployeeNotFoundException::new);
 
@@ -77,7 +77,7 @@ public class EmployeeRepository {
 
     public void deleteEmployee(Long employeeId) {
         Employee employeeToDelete = employees.stream()
-                .filter(employee -> employee.getEmployeeId().equals(employeeId))
+                .filter(employee -> employee.getId().equals(employeeId))
                 .findFirst()
                 .orElseThrow(EmployeeNotFoundException::new);
 
@@ -88,5 +88,9 @@ public class EmployeeRepository {
         return employees.stream()
                 .filter(employee -> employee.getCompanyId().equals(companyId))
                 .collect(Collectors.toList());
+    }
+
+    public void cleanAll(){
+        employees.clear();
     }
 }

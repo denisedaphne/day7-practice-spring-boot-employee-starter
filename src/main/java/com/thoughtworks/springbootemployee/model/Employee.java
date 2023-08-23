@@ -1,28 +1,43 @@
 package com.thoughtworks.springbootemployee.model;
 
 public class Employee {
-    private final Long employeeId;
-    private final String employeeName;
+    private Long id;
+    private String name;
     private Integer age;
-    private final String gender;
+    private String gender;
     private Integer salary;
-    private final Long companyId;
+    private Long companyId;
 
-    public Employee(Long employeeId, String employeeName, Integer age, String gender, Integer salary, Long companyId) {
-        this.employeeId = employeeId;
-        this.employeeName = employeeName;
+    public Employee(Long id, String name, Integer age, String gender, Integer salary, Long companyId) {
+        this.id = id;
+        this.name = name;
         this.age = age;
         this.gender = gender;
         this.salary = salary;
         this.companyId = companyId;
     }
 
-    public Long getEmployeeId() {
-        return employeeId;
+    public Employee(Long id, String name, Integer age, String gender, Integer salary) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
     }
 
-    public String getEmployeeName() {
-        return employeeName;
+    public Employee(String name, Integer age, String gender, Integer salary) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Integer getAge() {
