@@ -120,4 +120,16 @@ public class EmployeeServiceTest {
 
         assertThrows(EmployeeCreateException.class, () -> employeeService.create(invalidEmployee));
     }
+
+    @Test
+    void should_delete_employee_and_set_inactive_given_existing_employee() {
+        Long employeeId = 1L;
+        Employee existingEmployee = new Employee("Alice", 25, "Female", 8000);
+        when(mockedEmployeeRepository.findEmployeeById(employeeId)).thenReturn(existingEmployee);
+
+        employeeService.delete(employeeId);
+
+        assertFalse(existingEmployee.isActive());
+        verify(mockedEmployeeRepository).update(eq(employeeId), any(Employee.class));
+    }
 }
