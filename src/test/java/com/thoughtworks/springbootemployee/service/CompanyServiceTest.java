@@ -15,6 +15,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -92,5 +95,22 @@ public class CompanyServiceTest {
 
         // when then
         assertThrows(CompanyNotFoundException.class, () -> companyService.update(companyId, updatedCompany));
+    }
+
+    @Test
+    void should_return_list_companies_when_get_all_companies() {
+        // given
+        List<Company> companies = new ArrayList<>();
+        companies.add(new Company(1L, "Company 1"));
+        companies.add(new Company(2L, "Company 2"));
+
+        when(companyRepository.listAllCompanies()).thenReturn(companies);
+
+        // when
+        List<Company> result = companyService.getAllCompanies();
+
+        // then
+        assertEquals(companies, result);
+        verify(companyRepository, times(1)).listAllCompanies();
     }
 }
