@@ -81,4 +81,16 @@ public class CompanyServiceTest {
         verify(companyRepository, times(1)).findCompanyById(companyId);
         verify(companyRepository, times(1)).updateCompany(companyId, updatedCompany);
     }
+
+    @Test
+    void should_throw_exception_when_update_given_invalid_company_id() {
+        // given
+        Long companyId = 1L;
+        Company updatedCompany = new Company(1L, "Updated Company");
+
+        when(companyRepository.findCompanyById(companyId)).thenReturn(null);
+
+        // when then
+        assertThrows(CompanyNotFoundException.class, () -> companyService.update(companyId, updatedCompany));
+    }
 }
