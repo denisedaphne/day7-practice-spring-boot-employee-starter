@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;
 import com.thoughtworks.springbootemployee.exception.EmployeeUpdateException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +22,7 @@ public class EmployeeServiceTest {
         mockedEmployeeRepository = mock(EmployeeRepository.class);
         employeeService = new EmployeeService(mockedEmployeeRepository);
     }
+
     @Test
     void should_return_created_employee_when_create_given_employee_service_and_employee_wit_valid_age() {
         //given
@@ -131,5 +133,17 @@ public class EmployeeServiceTest {
 
         assertFalse(existingEmployee.isActive());
         verify(mockedEmployeeRepository).update(eq(employeeId), any(Employee.class));
+    }
+
+    @Test
+    void should_throw_employee_exception_when_update_given_inactive_employee() {
+        Long employeeId = 1L;
+        Employee inactiveEmployee = new Employee("Alice", 25, "Female", 8000);
+        inactiveEmployee.setActive(false);
+        when(mockedEmployeeRepository.findEmployeeById(employeeId)).thenReturn(inactiveEmployee);
+
+        Employee updatedEmployee = new Employee("Alice", 26, "Female", 8500);
+
+        assertThrows(EmployeeUpdateException.class, () -> employeeService.update(employeeId, updatedEmployee));
     }
 }
