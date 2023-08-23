@@ -113,4 +113,11 @@ public class EmployeeServiceTest {
         assertEquals(newEmployee.getGender(), createdEmployee.getGender());
         assertEquals(newEmployee.getSalary(), createdEmployee.getSalary());
     }
+
+    @Test
+    void should_throw_employee_exception_when_create_given_invalid_age() {
+        Employee invalidEmployee = new Employee("John", 17, "Male", 6000);
+
+        assertThrows(EmployeeCreateException.class, () -> employeeService.create(invalidEmployee));
+    }
 }
