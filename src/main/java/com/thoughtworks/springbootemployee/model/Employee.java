@@ -65,14 +65,6 @@ public class Employee {
         return salary;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public void setSalary(Integer salary) {
-        this.salary = salary;
-    }
-
     public Long getCompanyId() {
         return companyId;
     }
