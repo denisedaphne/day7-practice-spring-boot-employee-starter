@@ -2,8 +2,8 @@ package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
-import com.thoughtworks.springbootemployee.repository.CompanyRepository;
-import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import com.thoughtworks.springbootemployee.service.CompanyService;
+import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,45 +14,52 @@ import java.util.List;
 @RestController
 @SuppressWarnings("all")
 public class CompanyController {
+
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private final CompanyService companyService;
     @Autowired
-    private CompanyRepository companyRepository;
+    private final EmployeeService employeeService;
+
+    @Autowired
+    public CompanyController(CompanyService companyService, EmployeeService employeeService) {
+        this.companyService = companyService;
+        this.employeeService = employeeService;
+    }
 
     @GetMapping
     public List<Company> listAllCompanies() {
-        return companyRepository.listAllCompanies();
+        return companyService.listAllCompanies();
     }
 
     @GetMapping("/{companyId}")
     public Company findCompanyById(@PathVariable Long companyId) {
-        return companyRepository.findCompanyById(companyId);
+        return companyService.findCompanyById(companyId);
     }
 
     @GetMapping("/{companyId}/employees")
     public List<Employee> listEmployeesByCompanyId(@PathVariable Long companyId) {
-        return employeeRepository.listEmployeesByCompanyId(companyId);
+        return companyService.listEmployeesByCompanyId(companyId);
     }
 
     @GetMapping(params = {"pageNumber", "pageSize"})
     public List<Company> listCompaniesByPage(@RequestParam Long pageNumber, @RequestParam Long pageSize) {
-        return companyRepository.listCompaniesByPage(pageNumber, pageSize);
+        return companyService.listCompaniesByPage(pageNumber, pageSize);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Company addCompany(@RequestBody Company company) {
-        return companyRepository.addCompany(company);
+        return companyService.addCompany(company);
     }
 
     @PutMapping("/{companyId}")
-    public Company updateCompany(@PathVariable Long companyId, @RequestBody Company companyName) {
-        return companyRepository.updateCompany(companyId, companyName);
+    public Company updateCompany(@PathVariable Long companyId, @RequestBody Company company) {
+        return companyService.updateCompany(companyId, company);
     }
 
     @DeleteMapping("/{companyId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCompany(@PathVariable Long companyId) {
-        companyRepository.deleteCompany(companyId);
+        companyService.deleteCompany(companyId);
     }
 }
