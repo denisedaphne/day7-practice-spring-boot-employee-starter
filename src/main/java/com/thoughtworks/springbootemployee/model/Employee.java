@@ -7,6 +7,7 @@ public class Employee {
     private String gender;
     private Integer salary;
     private Long companyId;
+    private Boolean active;
 
     public Employee() {
     }
@@ -33,6 +34,15 @@ public class Employee {
         this.age = age;
         this.gender = gender;
         this.salary = salary;
+    }
+
+    public Employee(Long id, String name, Integer age, String gender, Integer salary, Boolean active) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
+        this.active = true;
     }
 
     public Long getId() {
@@ -65,5 +75,22 @@ public class Employee {
 
     public Long getCompanyId() {
         return companyId;
+    }
+
+    public boolean hasInvalidAge(Employee employee) {
+        return employee.getAge() < 18 || employee.getAge() > 65;
+    }
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public void merge(Employee employee) {
+        this.age = employee.age;
+        this.salary = employee.salary;
     }
 }
