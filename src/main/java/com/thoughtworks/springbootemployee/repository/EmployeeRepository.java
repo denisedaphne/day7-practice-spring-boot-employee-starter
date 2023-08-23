@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public class EmployeeRepository {
-    private static final List<Employee> employees = new ArrayList<>();
+    public static List<Employee> employees = new ArrayList<>();
 
     static {
         employees.add(new Employee(1L, "Daphne", 23, "Female", 1000, 1L));
@@ -73,15 +73,6 @@ public class EmployeeRepository {
         employeeToUpdate.setSalary(newSalary);
 
         return employeeToUpdate;
-    }
-
-    public void deleteEmployee(Long employeeId) {
-        Employee employeeToDelete = employees.stream()
-                .filter(employee -> employee.getId().equals(employeeId))
-                .findFirst()
-                .orElseThrow(EmployeeNotFoundException::new);
-
-        employees.remove(employeeToDelete);
     }
 
     public List<Employee> listEmployeesByCompanyId(Long companyId) {
