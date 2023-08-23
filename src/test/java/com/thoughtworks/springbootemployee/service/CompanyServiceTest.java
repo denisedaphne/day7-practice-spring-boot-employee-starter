@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
@@ -15,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -50,4 +52,15 @@ public class CompanyServiceTest {
         verify(companyRepository, times(1)).addCompany(any(Company.class));
     }
 
+    @Test
+    void should_invoke_delete_company_when_delete_given_company_id() {
+        // given
+        Long companyId = 1L;
+
+        // when
+        companyService.delete(companyId);
+
+        // then
+        verify(companyRepository, times(1)).deleteCompany(companyId);
+    }
 }
