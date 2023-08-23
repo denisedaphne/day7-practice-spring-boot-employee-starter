@@ -1,10 +1,17 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;
+import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.exception.EmployeeUpdateException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+import static com.thoughtworks.springbootemployee.repository.EmployeeRepository.employees;
+
+@Service
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
@@ -21,10 +28,11 @@ public class EmployeeService {
         return employeeRepository.addEmployee(employee);
     }
 
-    public void delete(Long id) {
+    public Employee delete(Long id) {
         Employee matchedEmployee = employeeRepository.findEmployeeById(id);
         matchedEmployee.setActive(Boolean.FALSE);
         employeeRepository.update(id, matchedEmployee);
+        return matchedEmployee;
     }
 
     public Employee update(Long id, Employee updateEmployee) {
@@ -33,5 +41,21 @@ public class EmployeeService {
             throw new EmployeeUpdateException();
         }
         return employeeRepository.update(id, updateEmployee);
+    }
+
+    public List<Employee> listAllEmployees() {
+        return employeeRepository.listAll();
+    }
+
+    public Employee findEmployeeById(Long employeeId) {
+        return employeeRepository.findEmployeeById(employeeId);
+    }
+
+    public List<Employee> findByGender(String gender) {
+        return employeeRepository.findByGender(gender);
+    }
+
+    public List<Employee> listEmployeesByPage(Long pageNumber, Long pageSize) {
+        return employeeRepository.listEmployeeByPage(pageNumber, pageSize);
     }
 }
