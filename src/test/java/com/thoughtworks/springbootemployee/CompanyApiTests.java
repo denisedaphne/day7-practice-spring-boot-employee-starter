@@ -46,6 +46,18 @@ public class CompanyApiTests {
                 .andExpect(jsonPath("$[0].companyName").value(company.getCompanyName()));
     }
 
+    @Test
+    void should_return_company_when_perform_post_company_given_a_new_company_with_JSON_format() throws Exception {
+        //given
+        Company newCompany = new Company(1L, "New Company");
 
+        //when //then
+        mockMvcClient.perform(MockMvcRequestBuilders.post("/companies")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(newCompany)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.companyId").exists())
+                .andExpect(jsonPath("$.companyName").value(newCompany.getCompanyName()));
+    }
 }
 
