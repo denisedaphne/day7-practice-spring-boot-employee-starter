@@ -25,6 +25,9 @@ public class EmployeeApiTests {
     @Autowired
     private MockMvc mockMvcClient;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @BeforeEach
     void cleanUpEmployeeData(){
         employeeRepository.cleanAll();
@@ -104,5 +107,23 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$.age").value(newEmployee.getAge()))
                 .andExpect(jsonPath("$.gender").value(newEmployee.getGender()))
                 .andExpect(jsonPath("$.salary").value(newEmployee.getSalary()));
+    }
+
+    @Test
+    void should_return_update_employee_age_and_salary_when_perform_put_given_employee() throws Exception {
+        // Given
+        Employee alice = employeeRepository.addEmployee(new Employee("Alice", 24, "Female", 9800));
+        Employee updateAlice = new Employee("Alice", 25, "Female", 10000);
+
+        // When // Then
+        mockMvcClient.perform(MockMvcRequestBuilders.put("/employees/" + alice.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateAlice)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(alice.getId()))
+                .andExpect(jsonPath("$.name").value(alice.getName()))
+                .andExpect(jsonPath("$.age").value(updateAlice.getAge()))
+                .andExpect(jsonPath("$.gender").value(alice.getGender()))
+                .andExpect(jsonPath("$.salary").value(updateAlice.getSalary()));
     }
 }
