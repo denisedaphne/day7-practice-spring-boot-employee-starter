@@ -41,8 +41,8 @@ public class EmployeeController {
     }
 
     @PutMapping("/{employeeId}")
-    public Employee updateEmployee(@PathVariable Long employeeId, @RequestParam Integer newAge, @RequestParam Integer newSalary) {
-        return employeeRepository.updateEmployee(employeeId, newAge, newSalary);
+    public Employee updateEmployee(@PathVariable Long employeeId, @RequestBody Employee updateEmployee) {
+        return employeeRepository.updateEmployee(employeeId, updateEmployee.getAge(), updateEmployee.getSalary());
     }
 
     @DeleteMapping("/{employeeId}")
