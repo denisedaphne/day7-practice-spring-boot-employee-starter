@@ -138,4 +138,23 @@ public class EmployeeApiTests {
         mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/" + alice.getId()))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    void should_return_page_employees_when_perform_get_given_employees_with_page() throws Exception {
+        //given
+        Employee alice = employeeRepository.addEmployee(new Employee("Alice", 24, "Female", 9800));
+        Employee bob = employeeRepository.addEmployee(new Employee("Bob", 26, "Male", 8000));
+        Employee charles = employeeRepository.addEmployee(new Employee("Charles", 28, "Male", 9000));
+
+        //when //then
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees")
+                        .param("pageNumber", "1")
+                        .param("pageSize", "3"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].id").value(alice.getId()))
+                .andExpect(jsonPath("$[1].id").value(bob.getId()))
+                .andExpect(jsonPath("$[2].id").value(charles.getId()));
+
+    }
 }
