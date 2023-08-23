@@ -1,15 +1,12 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;
-import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.exception.EmployeeUpdateException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import static com.thoughtworks.springbootemployee.repository.EmployeeRepository.employees;
 
 @Service
 public class EmployeeService {
