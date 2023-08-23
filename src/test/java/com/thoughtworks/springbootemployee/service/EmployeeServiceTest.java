@@ -99,4 +99,18 @@ public class EmployeeServiceTest {
 
         assertEquals("Employee is inactive", employeeUpdateException.getMessage());
     }
+
+    @Test
+    void should_return_employee_when_creating_given_valid_input() {
+        Employee newEmployee = new Employee("Alice", 25, "Female", 8000);
+        when(mockedEmployeeRepository.addEmployee(newEmployee)).thenReturn(newEmployee);
+
+        Employee createdEmployee = employeeService.create(newEmployee);
+
+        assertNotNull(createdEmployee);
+        assertEquals(newEmployee.getName(), createdEmployee.getName());
+        assertEquals(newEmployee.getAge(), createdEmployee.getAge());
+        assertEquals(newEmployee.getGender(), createdEmployee.getGender());
+        assertEquals(newEmployee.getSalary(), createdEmployee.getSalary());
+    }
 }
