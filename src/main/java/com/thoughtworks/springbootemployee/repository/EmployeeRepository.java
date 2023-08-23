@@ -93,4 +93,10 @@ public class EmployeeRepository {
     public void cleanAll(){
         employees.clear();
     }
+
+    public Employee update(Long id, Employee employee) {
+        Employee employeeToUpdate = findEmployeeById(id);
+        employeeToUpdate.merge(employee);
+        return employeeToUpdate;
+    }
 }
