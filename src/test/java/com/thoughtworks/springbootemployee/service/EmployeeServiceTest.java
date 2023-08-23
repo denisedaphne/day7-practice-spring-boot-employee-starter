@@ -6,8 +6,8 @@ import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -58,5 +58,16 @@ public class EmployeeServiceTest {
         });
         //then
         assertEquals("Employee must be 18-65 years old", employeeCreateException.getMessage());
+    }
+
+    @Test
+    void should_create_employee_with_default_active_status() {
+        //given
+        Employee employee = new Employee(null, "Lucy", 20, "Female", 5000, true);
+        //when
+        when(mockedEmployeeRepository.addEmployee(any(Employee.class))).thenReturn(employee);
+        Employee createEmployee = employeeService.create(employee);
+        //then
+        assertTrue(createEmployee.isActive());
     }
 }
