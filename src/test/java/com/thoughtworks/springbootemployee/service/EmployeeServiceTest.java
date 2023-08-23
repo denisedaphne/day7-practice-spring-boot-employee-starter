@@ -4,7 +4,6 @@ import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;
 import com.thoughtworks.springbootemployee.exception.EmployeeUpdateException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,8 +25,8 @@ public class EmployeeServiceTest {
     @Test
     void should_return_created_employee_when_create_given_employee_service_and_employee_wit_valid_age() {
         //given
-        Employee employee = new Employee(null, "Lucy", 20, "Female", 3000);
-        Employee savedEmployee = new Employee(1L, "Lucy", 20, "Female", 3000);
+        Employee employee = new Employee(null, "Lucy", 20, "Female", 3000, 1L);
+        Employee savedEmployee = new Employee(1L, "Lucy", 20, "Female", 3000, 1L);
         when(mockedEmployeeRepository.addEmployee(employee)).thenReturn(savedEmployee);
         //when
         Employee employeeResponse = employeeService.create(employee);
@@ -44,9 +43,7 @@ public class EmployeeServiceTest {
         //given
         Employee employee = new Employee(null, "Lucy", 17, "Female", 3000);
         //when
-        EmployeeCreateException employeeCreateException = assertThrows(EmployeeCreateException.class, () -> {
-            employeeService.create(employee);
-        });
+        EmployeeCreateException employeeCreateException = assertThrows(EmployeeCreateException.class, () -> employeeService.create(employee));
         //then
         assertEquals("Employee must be 18-65 years old", employeeCreateException.getMessage());
     }
@@ -56,9 +53,7 @@ public class EmployeeServiceTest {
         //given
         Employee employee = new Employee(null, "Lucy", 70, "Female", 5000);
         //when
-        EmployeeCreateException employeeCreateException = assertThrows(EmployeeCreateException.class, () -> {
-            employeeService.create(employee);
-        });
+        EmployeeCreateException employeeCreateException = assertThrows(EmployeeCreateException.class, () -> employeeService.create(employee));
         //then
         assertEquals("Employee must be 18-65 years old", employeeCreateException.getMessage());
     }
@@ -77,7 +72,7 @@ public class EmployeeServiceTest {
     @Test
     void should_delete_employee_by_setting_active_status_to_false() {
         //given
-        Employee employee = new Employee(1L, "Lucy", 25, "Female", 5000);
+        Employee employee = new Employee(1L, "Lucy", 25, "Female", 5000, 1L);
         when(mockedEmployeeRepository.findEmployeeById(1L)).thenReturn(employee);
         when(mockedEmployeeRepository.update(any(Long.class), any(Employee.class))).thenReturn(employee);
         //when
@@ -90,13 +85,11 @@ public class EmployeeServiceTest {
     @Test
     void should_throw_exception_when_updating_given_inactive_employee() {
         //given
-        Employee employee = new Employee(1L, "Lucy", 25, "Female", 5000);
+        Employee employee = new Employee(1L, "Lucy", 25, "Female", 5000, 1L);
         employee.setActive(false);
         when(mockedEmployeeRepository.findEmployeeById(1L)).thenReturn(employee);
         //when
-        EmployeeUpdateException employeeUpdateException = assertThrows(EmployeeUpdateException.class, () -> {
-            employeeService.update(1L, employee);
-        });
+        EmployeeUpdateException employeeUpdateException = assertThrows(EmployeeUpdateException.class, () -> employeeService.update(1L, employee));
         //then
 
         assertEquals("Employee is inactive", employeeUpdateException.getMessage());
@@ -104,7 +97,7 @@ public class EmployeeServiceTest {
 
     @Test
     void should_return_employee_when_creating_given_valid_input() {
-        Employee newEmployee = new Employee("Alice", 25, "Female", 8000);
+        Employee newEmployee = new Employee(1L, "Alice", 25, "Female", 8000, 1L);
         when(mockedEmployeeRepository.addEmployee(newEmployee)).thenReturn(newEmployee);
 
         Employee createdEmployee = employeeService.create(newEmployee);
@@ -126,7 +119,7 @@ public class EmployeeServiceTest {
     @Test
     void should_delete_employee_and_set_inactive_given_existing_employee() {
         Long employeeId = 1L;
-        Employee existingEmployee = new Employee("Alice", 25, "Female", 8000);
+        Employee existingEmployee = new Employee(1L, "Alice", 25, "Female", 8000, 1L);
         when(mockedEmployeeRepository.findEmployeeById(employeeId)).thenReturn(existingEmployee);
 
         employeeService.delete(employeeId);
@@ -138,11 +131,11 @@ public class EmployeeServiceTest {
     @Test
     void should_throw_employee_exception_when_update_given_inactive_employee() {
         Long employeeId = 1L;
-        Employee inactiveEmployee = new Employee("Alice", 25, "Female", 8000);
+        Employee inactiveEmployee = new Employee(1L, "Alice", 25, "Female", 8000, 1L);
         inactiveEmployee.setActive(false);
         when(mockedEmployeeRepository.findEmployeeById(employeeId)).thenReturn(inactiveEmployee);
 
-        Employee updatedEmployee = new Employee("Alice", 26, "Female", 8500);
+        Employee updatedEmployee = new Employee(1L, "Alice", 26, "Female", 8500, 1L);
 
         assertThrows(EmployeeUpdateException.class, () -> employeeService.update(employeeId, updatedEmployee));
     }
